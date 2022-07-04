@@ -1,0 +1,64 @@
+{
+  "locations": {
+    "frankies": {
+      "name": "Frankie's Java House",
+      "description": "A cafe next to South Beach Harbor.",
+      "welcome_message": "This is the closest place to grab some food."
+    },
+    "frankies_front_door": {
+      "name": "Frankie's Front Door",
+      "description": "The main entrance to Frankie's",
+      "welcome_message": "This is the entrance to Frankie's, the closest place to grab some food."
+    },
+    "south_beach_harbor": {
+      "name": "South Beach Harbor",
+      "description": "A harbor south of the western span of the Bay Bridge at Pier 40. Home to BAADS, the Bay Area Association of Disabled Sailors.",
+      "welcome_message": "Welcome to South Beach Harbor!"
+    },
+    "south_beach_dingy_dock": {
+      "name": "The Dingy Dock",
+      "description": "The dock where the BAADS small boat program operates.",
+      "welcome_message": "Welcome to the Dingy Dock!"
+    },
+    "south_beach_gate_1": {
+      "name": "Gate 1",
+      "description": "An entrance on the north side of the South Beach Harbor docks.",
+      "welcome_message": "Welcome to Gate 1!"
+    },
+    "south_beach_gate_2": {
+      "name": "Gate 2",
+      "description": "An entrance on the northwest side of the South Beach Harbor docks. The main gate where BAADS keelboat participants meet and the easiest point of access to the keelboat program slips",
+      "welcome_message": "Welcome to Gate 2!"
+    },
+    "south_beach_gate_3": {
+      "name": "Gate 3",
+      "description": "An entrance on the southwest side of the South Beach Harbor docks, south of the Harbor Building.",
+      "welcome_message": "Welcome to Gate 3!"
+    },
+    "south_beach_gate_4": {
+      "name": "Gate 4",
+      "description": "An entrance at the south end of the South Beach Harbor docks, located off the Fishing Pier at Pier 42.",
+      "welcome_message": "Welcome to Gate 4!"
+    },
+    "south_beach_fishing_pier": {
+      "name": "Fishing Pier",
+      "description": "A great place to feel the breeze and watch the boats entering the south end of the Harbor.",
+      "welcome_message": "Welcome to the Fishing Pier!"
+    },
+    "south_beach_harbor_building": {
+      "name": "Harbor Building",
+      "description": "The South Beach Harbor Building houses the Harbor Masters Office, the Yacht Club, and most importantly... the Bathrooms.",
+      "welcome_message": "Welcome to the South Beach Harbor Building!"
+    },
+    "south_beach_harbor_side_entrance": {
+      "name": "Harbor Side Entrance",
+      "description": "The main entrance to the South Beach Harbor Building located on the East side of the building towards the harbor.",
+      "welcome_message": "Welcome to the main entrance of the South Beach Harbor Building!"
+    },
+    "south_beach_parking_lot_side_entrance": {
+      "name": "Parking Lot Entrance",
+      "description": "The entrance to the South Beach Harbor Building from the parking lot located on the West side of the building towards Oracle Park.",
+      "welcome_message": "Welcome to the South Beach Harbor Building!"
+    }
+  }
+}
