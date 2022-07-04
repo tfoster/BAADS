@@ -1,25 +1,46 @@
 {
-  "frankies": {
-    "latitude": 37.781395074131744,
-    "longitude": -122.38780890048355,
-    "icon": "restaurant",
-    "icon_family": "material",
-    "radius": 9,
-    "sublocations": {
-      "frankies_front_door": {
-        "latitude": 37.78134949638424,
-        "longitude": -122.38780822993247,
-        "radius": 1,
-        "icon": "door"
-      }
-    }
-  },
   "south_beach_harbor": {
     "latitude": 37.78010570168649,
     "longitude": -122.38649684180565,
     "radius": 187,
     "icon": "anchor",
-    "sublocations": {
+    "_sublocations": {
+      "south_beach_harbor_building": {
+        "latitude": 37.78002264617597,
+        "longitude": -122.38791957334219,
+        "radius": 36,
+        "icon": "domain",
+        "icon_family": "material",
+        "_sublocations": {
+          "south_beach_harbor_side_entrance": {
+            "latitude": 37.77999627272142,
+            "longitude": -122.38783967725118,
+            "radius": 1,
+            "icon": "door"
+          },
+          "south_beach_parking_lot_side_entrance": {
+            "latitude": 37.78001376218046,
+            "longitude": -122.38799457482064,
+            "radius": 1,
+            "icon": "door"
+          }
+        }
+      },
+      "frankies": {
+        "latitude": 37.781395074131744,
+        "longitude": -122.38780890048355,
+        "icon": "restaurant",
+        "icon_family": "material",
+        "radius": 9,
+        "_sublocations": {
+          "frankies_front_door": {
+            "latitude": 37.78134949638424,
+            "longitude": -122.38780822993247,
+            "radius": 1,
+            "icon": "door"
+          }
+        }
+      },
       "south_beach_dingy_dock": {
         "latitude": 37.78149112282326,
         "longitude": -122.38726495162864,
@@ -55,27 +76,6 @@
         "longitude": -122.38746365648923,
         "radius": 1,
         "icon": "pier"
-      },
-      "south_beach_harbor_building": {
-        "latitude": 37.78002264617597,
-        "longitude": -122.38791957334219,
-        "radius": 36,
-        "icon": "domain",
-        "icon_family": "material",
-        "sublocations": {
-          "south_beach_harbor_side_entrance": {
-            "latitude": 37.77999627272142,
-            "longitude": -122.38783967725118,
-            "radius": 1,
-            "icon": "door"
-          },
-          "south_beach_parking_lot_side_entrance": {
-            "latitude": 37.78001376218046,
-            "longitude": -122.38799457482064,
-            "radius": 1,
-            "icon": "door"
-          }
-        }
       }
     }
   }
