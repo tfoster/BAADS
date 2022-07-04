@@ -64,10 +64,12 @@ export default function NavigationScreen({ navigation }: RootTabScreenProps<'Nav
       { sublocations && Object.entries(sublocations)
           .filter(([k, l]) => !k.startsWith('_'))
           .map(([k, l]) => ((<Marker key={k} coordinate={l} title={strings.locations[k].name}>
-            <Icon name={l.icon || 'close'} type={l.icon_family || 'material-community'}/>
+            <Icon name={l.icon?.name || 'close'} type={l.icon?.family || 'material-community'} color={l.icon?.color || 'darkgray'}/>
           </Marker>)))
       }
-      { location ? <Marker coordinate={location?.coords ?? region} /> : undefined }
+      { location ? (<Marker coordinate={location?.coords ?? region}>
+        <Icon name="pirate" type="material-community" color="red" />
+      </Marker>) : undefined }
     </MapView>
   );
 }
