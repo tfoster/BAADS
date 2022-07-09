@@ -1,59 +1,41 @@
-import {
-  getCurrentPositionAsync,
-  LocationAccuracy,
-  LocationObject,
-  requestBackgroundPermissionsAsync, requestForegroundPermissionsAsync
-} from 'expo-location';
-
-import {useEffect, useState} from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {createRef, useState} from 'react';
+import {StyleSheet} from 'react-native';
 import { Icon } from '@rneui/base';
 
-/* @hide */
-import Device from 'expo-device';
-/* @end */
-
 import MapView, {Marker} from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
+import {useNavigationContext} from '../GeospatialNavigationContext';
+import {useGlobalContext} from '../GlobalContext';
 import {RootTabScreenProps} from '../types';
 
 import locations from '../locations.json';
 import strings from '../strings.json';
+import {useVoiceControlContext} from '../VoiceControlContext';
 
 const DEFAULT_MAP_CONTEXT = 'south_beach_harbor';
 export default function NavigationScreen({ navigation }: RootTabScreenProps<'Navigation'>) {
-  const [errorMsg, setErrorMsg] = useState('');
-  const [location, setLocation] = useState<LocationObject>(null);
+  const {useVoiceControl} = useGlobalContext();
+  const { speak } = useVoiceControlContext();
+  const { location } = useNavigationContext();
+  const [destination, setDestination] = useState<{latitude: number, longitude: number} | null>(null);
   const [mapContext, setMapContext] = useState([DEFAULT_MAP_CONTEXT, locations[DEFAULT_MAP_CONTEXT]]);
+  const mapViewRef = createRef<MapView>();
 
   const mapContextKey = mapContext[0];
   const sublocations = mapContext[1]['_sublocations'];
+
   const [region, setRegion] = useState({
-    latitude: 37.78015223385197,
-    longitude:  -122.38790713099024,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
+    latitude: location?.coords.latitude || 37.78015223385197,
+    longitude: location?.coords.longitude || -122.38790713099024,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
   });
 
-  useEffect(() => {
-    (async () => {
-      /* @hide */
-      if (Platform.OS === 'android' && !Device.isDevice) {
-        setErrorMsg(
-            'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
-        );
-        return;
-      }
-      /* @end */
-      let { status } = await requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let location = await getCurrentPositionAsync({ accuracy: LocationAccuracy.Highest });
-      setLocation(location);
-    })();
-  }, []);
+  function onMarkerPress(key, location) {
+    const {latitude, longitude} = location;
+    setDestination({latitude, longitude});
+    speak(`Requesting directions to ${strings.locations[key].name}.`);
+  }
 
   return (
     <MapView
@@ -61,15 +43,30 @@ export default function NavigationScreen({ navigation }: RootTabScreenProps<'Nav
         initialRegion={region}
         onRegionChangeComplete={region => setRegion(region)}
     >
-      { sublocations && Object.entries(sublocations)
-          .filter(([k, l]) => !k.startsWith('_'))
-          .map(([k, l]) => ((<Marker key={k} coordinate={l} title={strings.locations[k].name}>
-            <Icon name={l.icon?.name || 'close'} type={l.icon?.family || 'material-community'} color={l.icon?.color || 'darkgray'}/>
-          </Marker>)))
+      {
+        sublocations && Object.entries(sublocations)
+            .filter(([k, l]) => !k.startsWith('_'))
+            .map(([k, l]) => (
+                <Marker key={k} coordinate={l}
+                        title={strings.locations[k].name}
+                        onPress={onMarkerPress.bind(null, k, l)}>
+                  <Icon name={l.icon?.name || 'close'}
+                        type={l.icon?.family || 'material-community'}
+                        color={l.icon?.color || 'darkgray'}/>
+                </Marker>
+            ))
       }
       { location ? (<Marker coordinate={location?.coords ?? region}>
         <Icon name="pirate" type="material-community" color="red" />
       </Marker>) : undefined }
+      {destination ? <MapViewDirections mode={'WALKING'} precision={'high'}
+                                        strokeWidth={2}
+                                        strokeColor="blue"
+                                        ref={mapViewRef}
+                                        origin={location?.coords ?? region}
+                                        destination={destination ?? region}
+                                        apikey={'AIzaSyCIzxC2Czk1hW7nUuUG49yJ9TQllNQ4w6U'}
+      /> : null }
     </MapView>
   );
 }
