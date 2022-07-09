@@ -2,7 +2,17 @@
   "south_beach_harbor": {
     "latitude": 37.78010570168649,
     "longitude": -122.38649684180565,
-    "radius": 187,
+    "polygon": [
+      {"latitude": 37.78183207974008, "longitude": -122.38807676609058},
+      {"latitude": 37.78196590361441, "longitude": -122.38552390243821},
+      {"latitude": 37.7811629567651, "longitude": -122.38474892597188},
+      {"latitude": 37.7790834897124, "longitude": -122.38477497559869},
+      {"latitude": 37.77841434184477, "longitude": -122.38531550540257},
+      {"latitude": 37.77835257404393, "longitude": -122.38748413702552},
+      {"latitude": 37.779829839803504, "longitude": -122.38932714828465},
+      {"latitude": 37.780401178573946, "longitude": -122.38865637033521},
+      {"latitude": 37.78113722114049, "longitude": -122.38821352664345}
+    ],
     "icon": {
       "name": "anchor"
     },
@@ -10,7 +20,13 @@
       "south_beach_harbor_building": {
         "latitude": 37.78002264617597,
         "longitude": -122.38791957334219,
-        "radius": 36,
+        "polygon": [
+          {"latitude": 37.78021946165188, "longitude": -122.38814366447275},
+          {"latitude": 37.78024782474666, "longitude": -122.38763408316342},
+          {"latitude": 37.779579133726784, "longitude": -122.38756866297257},
+          {"latitude": 37.779554140601824, "longitude": -122.38783169981399},
+          {"latitude": 37.77961997623649, "longitude": -122.38807752062804}
+        ],
         "icon": {
           "name": "domain",
           "family": "material"
@@ -20,7 +36,6 @@
           "south_beach_harbor_side_entrance": {
             "latitude": 37.77999627272142,
             "longitude": -122.38783967725118,
-            "radius": 1,
             "icon": {
               "name": "door"
             }
@@ -28,7 +43,6 @@
           "south_beach_parking_lot_side_entrance": {
             "latitude": 37.78001376218046,
             "longitude": -122.38799457482064,
-            "radius": 1,
             "icon": {
               "name": "door"
             }
@@ -38,16 +52,21 @@
       "frankies": {
         "latitude": 37.781395074131744,
         "longitude": -122.38780890048355,
+        "polygon": [
+          {"latitude": 37.78146649775165, "longitude": -122.38803637607738},
+          {"latitude": 37.78152161493646, "longitude": -122.38774535640147},
+          {"latitude": 37.78121423011212, "longitude": -122.38772322817725},
+          {"latitude": 37.78121740996166, "longitude": -122.38783856316402}
+        ],
         "icon": {
           "name": "restaurant",
-          "family": "material"
+          "family": "material",
+          "color": "black"
         },
-        "radius": 9,
         "_sublocations": {
           "frankies_front_door": {
             "latitude": 37.78134949638424,
             "longitude": -122.38780822993247,
-            "radius": 1,
             "icon": {
               "name": "door"
             }
@@ -57,16 +76,22 @@
       "south_beach_dingy_dock": {
         "latitude": 37.78149112282326,
         "longitude": -122.38726495162864,
-        "radius": 1,
         "icon": {
           "name": "sail-boat",
           "color": "blue"
         }
       },
-      "south_beach_gate_1": {
+      "south_beach_ramp_1_top": {
         "latitude": 37.781469393929,
         "longitude": -122.38767362706837,
-        "radius": 1,
+        "nonvisible": true
+      },
+      "south_beach_gate_1": {
+        "latitude": 37.78134619375244,
+        "longitude": -122.387666901787,
+        "waypoints": [
+          "south_beach_ramp_1_top"
+        ],
         "icon": {
           "name": "gate"
         }
@@ -74,7 +99,6 @@
       "south_beach_gate_2": {
         "latitude": 37.780628994193535,
         "longitude": -122.3876816293036,
-        "radius": 1,
         "icon": {
           "name": "gate"
         }
@@ -82,7 +106,6 @@
       "south_beach_gate_3": {
         "latitude": 37.77914568473024,
         "longitude": -122.38754184458104,
-        "radius": 1,
         "icon": {
           "name": "gate"
         }
@@ -90,7 +113,6 @@
       "south_beach_gate_4": {
         "latitude": 37.778369048366116,
         "longitude": -122.38738444139746,
-        "radius": 1,
         "icon": {
           "name": "gate"
         }
@@ -98,7 +120,6 @@
       "south_beach_fishing_pier": {
         "latitude": 37.7783495050256,
         "longitude": -122.38746365648923,
-        "radius": 1,
         "icon": {
           "name": "pier"
         }

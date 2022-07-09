@@ -1,11 +1,9 @@
-import {createRef, useState} from 'react';
+import {createRef, Fragment, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import { Icon } from '@rneui/base';
 
-import MapView, {Marker} from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
+import MapView, {Marker, Polygon} from 'react-native-maps';
 import {useNavigationContext} from '../GeospatialNavigationContext';
-import {useGlobalContext} from '../GlobalContext';
 import {RootTabScreenProps} from '../types';
 
 import locations from '../locations.json';
@@ -16,12 +14,30 @@ const DEFAULT_MAP_CONTEXT = 'south_beach_harbor';
 export default function NavigationScreen({ navigation }: RootTabScreenProps<'Navigation'>) {
   const { speak } = useVoiceControlContext();
   const { location } = useNavigationContext();
+  const [showPolygons, setShowPolygons] = useState(false);
   const [destination, setDestination] = useState<{latitude: number, longitude: number} | null>(null);
-  const [mapContext, setMapContext] = useState([DEFAULT_MAP_CONTEXT, locations[DEFAULT_MAP_CONTEXT]]);
+  const [mapContext, setMapContext] = useState([DEFAULT_MAP_CONTEXT]);
+  const [sublocations, setSublocations] = useState([]);
   const mapViewRef = createRef<MapView>();
 
-  const mapContextKey = mapContext[0];
-  const sublocations = mapContext[1]['_sublocations'];
+  useEffect(() => {
+    function walkSublocations(locs, ctx, depth) {
+      if (depth >= ctx.length) {
+        return [];
+      }
+
+      let results = [];
+      let loc = locs[ctx[depth]];
+      if (loc._sublocations) {
+        results = results.concat(Object.entries(loc._sublocations).map(([key, v]) => ({...v, key})));
+        results = results.concat(walkSublocations(locs, ctx, depth + 1));
+      } else {
+        results.push({...loc});
+      }
+      return results;
+    }
+    setSublocations(walkSublocations(locations, mapContext, 0));
+  }, [mapContext, locations]);
 
   const [region, setRegion] = useState({
     latitude: location?.coords.latitude || 37.78015223385197,
@@ -37,36 +53,32 @@ export default function NavigationScreen({ navigation }: RootTabScreenProps<'Nav
   }
 
   return (
-    <MapView
-        style={styles.map}
-        initialRegion={region}
-        onRegionChangeComplete={region => setRegion(region)}
-    >
-      {
-        sublocations && Object.entries(sublocations)
-            .filter(([k, l]) => !k.startsWith('_'))
-            .map(([k, l]) => (
-                <Marker key={k} coordinate={l}
-                        title={strings.locations[k].name}
-                        onPress={onMarkerPress.bind(null, k, l)}>
-                  <Icon name={l.icon?.name || 'close'}
-                        type={l.icon?.family || 'material-community'}
-                        color={l.icon?.color || 'darkgray'}/>
-                </Marker>
-            ))
-      }
-      { location ? (<Marker coordinate={location?.coords ?? region}>
-        <Icon name="pirate" type="material-community" color="red" />
-      </Marker>) : undefined }
-      {destination ? <MapViewDirections mode={'WALKING'} precision={'high'}
-                                        strokeWidth={2}
-                                        strokeColor="blue"
-                                        ref={mapViewRef}
-                                        origin={location?.coords ?? region}
-                                        destination={destination ?? region}
-                                        apikey={'AIzaSyCIzxC2Czk1hW7nUuUG49yJ9TQllNQ4w6U'}
-      /> : null }
-    </MapView>
+      <MapView
+          style={styles.map}
+          initialRegion={region}
+          onRegionChangeComplete={region => setRegion(region)}
+      >
+        {
+          sublocations && sublocations
+              .filter(l => !l.nonvisible)
+              .map(l => (
+                  <Fragment key={l.key}>
+                    <Marker key={`${l.key}_marker`} coordinate={l}
+                            title={strings.locations[l.key].name}
+                            onPress={onMarkerPress.bind(null, l.key, l)}>
+                      <Icon name={l.icon?.name || 'close'}
+                            type={l.icon?.family || 'material-community'}
+                            color={l.icon?.color || 'darkgray'}/>
+                    </Marker>
+                    {showPolygons && l.polygon && (<Polygon key={`${l.key}_polygon`} coordinates={l.polygon} />)}
+                  </Fragment>
+              ))
+        }
+        { location ? (
+            <Marker coordinate={location?.coords ?? region}>
+              <Icon name="pirate" type="material-community" color="red" />
+            </Marker>) : undefined }
+      </MapView>
   );
 }
 
