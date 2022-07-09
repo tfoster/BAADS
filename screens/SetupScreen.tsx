@@ -1,3 +1,4 @@
+import {Component, useEffect, useState} from 'react';
 import {useGlobalContext} from '../GlobalContext';
 
 import {RootStackScreenProps} from '../types';
@@ -7,18 +8,20 @@ import VoiceConfirmationScreen from './VoiceConfirmationScreen';
 
 export default function SetupScreen({ navigation }: RootStackScreenProps<'Setup'>) {
   const { useVoiceControl, useNavigation, useBackgroundNavigation, setSetupCompleted} = useGlobalContext();
+  const [screen, setScreen] = useState(null);
 
-  let screen = null;
-  if (useVoiceControl === undefined) {
-    screen = <VoiceConfirmationScreen />;
-  } else if (useNavigation === undefined) {
-    screen = <NavigationConfirmationScreen/>;
-  } else if (useBackgroundNavigation === undefined) {
-    screen = <AutoActivationConfirmationScreen />;
-  } else {
-    setSetupCompleted(true);
-    navigation.navigate('Root');
-  }
+  useEffect(() => {
+    if (useVoiceControl === undefined) {
+      setScreen(<VoiceConfirmationScreen/>);
+    } else if (useNavigation === undefined) {
+      setScreen(<NavigationConfirmationScreen/>);
+    } else if (useBackgroundNavigation === undefined) {
+      setScreen(<AutoActivationConfirmationScreen/>);
+    } else {
+      setSetupCompleted(true);
+      navigation.navigate('Root');
+    }
+  }, [useVoiceControl, useNavigation, useBackgroundNavigation, setSetupCompleted]);
 
   return (screen);
 }
