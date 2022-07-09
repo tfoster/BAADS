@@ -38,8 +38,10 @@
       "frankies": {
         "latitude": 37.781395074131744,
         "longitude": -122.38780890048355,
-        "icon": "restaurant",
-        "icon_family": "material",
+        "icon": {
+          "name": "restaurant",
+          "family": "material"
+        },
         "radius": 9,
         "_sublocations": {
           "frankies_front_door": {

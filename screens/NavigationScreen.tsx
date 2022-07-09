@@ -14,7 +14,6 @@ import {useVoiceControlContext} from '../VoiceControlContext';
 
 const DEFAULT_MAP_CONTEXT = 'south_beach_harbor';
 export default function NavigationScreen({ navigation }: RootTabScreenProps<'Navigation'>) {
-  const {useVoiceControl} = useGlobalContext();
   const { speak } = useVoiceControlContext();
   const { location } = useNavigationContext();
   const [destination, setDestination] = useState<{latitude: number, longitude: number} | null>(null);
